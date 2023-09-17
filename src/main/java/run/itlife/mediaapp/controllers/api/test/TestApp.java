@@ -15,4 +15,9 @@ public class TestApp {
     public String getNameApplication() {
         return name;
     }
+
+    @GetMapping("/springboot")
+    public String welcome() {
+        return "<h1>Spring Boot</h1>";
+    }
 }
