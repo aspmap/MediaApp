@@ -1,4 +1,4 @@
-package run.itlife.mediaapp.entities;
+package run.itlife.mediaapp.entities.persons;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -16,9 +16,11 @@ public class Persons {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NotNull
     @Column(name = "person_id")
-    private String id;
+    private String personId;
 
+    @NotNull
     private String lastname;
+    @NotNull
     private String firstname;
     private String patronymic;
     private String photo;
@@ -34,7 +36,7 @@ public class Persons {
     private LocalDateTime birthdate;
 
     public Persons() {
-        this.id = UUID.randomUUID().toString();
+        this.personId = UUID.randomUUID().toString();
         this.lastname = "lastname";
         this.firstname = "firstname";
         this.patronymic = "patronymic";
@@ -56,12 +58,12 @@ public class Persons {
 
     }
 
-    public String getId() {
-        return id;
+    public String getPersonId() {
+        return personId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPersonId(String personId) {
+        this.personId = personId;
     }
 
     public String getLastname() {

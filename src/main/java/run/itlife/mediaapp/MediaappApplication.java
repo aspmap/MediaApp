@@ -22,6 +22,7 @@ public class MediaappApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/persons").allowedOrigins("*");
 				registry.addMapping("/api").allowedOrigins("*");
+				registry.addMapping("/api/person/*").allowedOrigins("*");
 			}
 		};
 	}

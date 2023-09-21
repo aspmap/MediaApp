@@ -7,7 +7,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import run.itlife.mediaapp.entities.Persons;
+import run.itlife.mediaapp.entities.persons.Persons;
 import run.itlife.mediaapp.validation.PersonsErrorHandler;
 
 import java.net.URI;

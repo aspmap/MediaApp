@@ -1,7 +1,7 @@
 package run.itlife.mediaapp.repositories;
 
 import org.springframework.stereotype.Repository;
-import run.itlife.mediaapp.entities.Persons;
+import run.itlife.mediaapp.entities.persons.Persons;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -16,7 +16,7 @@ public class PersonsRepositoryNoData implements CommonRepository<Persons> {
 
     @Override
     public Persons save(Persons entity) {
-        Persons result = persons.get(entity.getId());
+        Persons result = persons.get(entity.getPersonId());
         if(result != null) {
             result.setFirstname(entity.getFirstname());
             result.setLastname(entity.getLastname());
@@ -24,8 +24,8 @@ public class PersonsRepositoryNoData implements CommonRepository<Persons> {
             result.setBirthdate(entity.getBirthdate());
             entity = result;
         }
-        persons.put(entity.getId(), entity);
-        return persons.get(entity.getId());
+        persons.put(entity.getPersonId(), entity);
+        return persons.get(entity.getPersonId());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PersonsRepositoryNoData implements CommonRepository<Persons> {
 
     @Override
     public void delete(Persons entity) {
-        persons.remove(entity.getId());
+        persons.remove(entity.getPersonId());
     }
 
     @Override

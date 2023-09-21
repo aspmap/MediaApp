@@ -1,6 +1,6 @@
 package run.itlife.mediaapp.controllers.api.test;
 
-import run.itlife.mediaapp.entities.Persons;
+import run.itlife.mediaapp.entities.persons.Persons;
 
 public class PersonBuilder {
 
@@ -29,7 +29,7 @@ public class PersonBuilder {
     public Persons build() {
         Persons result = new Persons(this.info);
         if(id != null) {
-            result.setId(id);
+            result.setPersonId(id);
         }
         return result;
     }

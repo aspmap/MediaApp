@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import run.itlife.mediaapp.controllers.api.test.PersonBuilder;
-import run.itlife.mediaapp.entities.Persons;
+import run.itlife.mediaapp.entities.persons.Persons;
 import run.itlife.mediaapp.repositories.PersonsRepository;
 import run.itlife.mediaapp.validation.PersonsValidationError;
 import run.itlife.mediaapp.validation.PersonsValidationErrorBuilder;
@@ -32,6 +32,7 @@ public class PersonsController {
     }
 
     @GetMapping("/persons")
+    //@CrossOrigin(origins = "*")
     public ResponseEntity<Iterable<Persons>> getPersons(){
         return ResponseEntity.ok(personsRepository.findAll());
     }
@@ -55,7 +56,7 @@ public class PersonsController {
         result.setPhoto("none");
         personsRepository.save(result);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .buildAndExpand(result.getId()).toUri();
+                .buildAndExpand(result.getPersonId()).toUri();
         return ResponseEntity.ok().header("Location",location.toString()).build();
     }
 
@@ -67,7 +68,7 @@ public class PersonsController {
         }
         Persons result = personsRepository.save(persons);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(result.getId()).toUri();
+                .buildAndExpand(result.getPersonId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
