@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import run.itlife.mediaapp.controllers.api.test.PersonBuilder;
 import run.itlife.mediaapp.entities.persons.Persons;
+import run.itlife.mediaapp.entities.projects.Projects;
 import run.itlife.mediaapp.repositories.PersonsRepository;
 import run.itlife.mediaapp.validation.PersonsValidationError;
 import run.itlife.mediaapp.validation.PersonsValidationErrorBuilder;
@@ -33,15 +34,24 @@ public class PersonsController {
         this.personsRepository = personsRepository;
     }
 
+    /**
+     * Поиск всей информации по всем персонам
+     * @return
+     */
     @GetMapping("/persons")
     //@CrossOrigin(origins = "*")
     public ResponseEntity<Iterable<Persons>> getPersons(){
         return ResponseEntity.ok(personsRepository.findAll());
     }
 
-    @GetMapping("/person/{id}")
-    public ResponseEntity<Persons> getPersonById(@PathVariable String id){
-        Optional<Persons> person = personsRepository.findById(id);
+    /**
+     * Поиск информации по id персоны
+     * @param personId ID персоны
+     * @return
+     */
+    @GetMapping("/person/{personId}")
+    public ResponseEntity<Persons> getPersonById(@PathVariable String personId){
+        Optional<Persons> person = personsRepository.findById(personId);
         if(person.isPresent()) {
             return ResponseEntity.ok(person.get());
         }

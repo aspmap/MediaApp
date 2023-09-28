@@ -23,6 +23,10 @@ public class MediaappApplication {
 				registry.addMapping("/api/persons").allowedOrigins("*");
 				registry.addMapping("/api").allowedOrigins("*");
 				registry.addMapping("/api/person/*").allowedOrigins("*");
+				registry.addMapping("/api/project/person/*").allowedOrigins("*");
+				registry.addMapping("/api/work/project/*").allowedOrigins("*");
+				registry.addMapping("/api/mediainfo/work/*").allowedOrigins("*");
+				registry.addMapping("/api/work/*").allowedOrigins("*");
 			}
 		};
 	}

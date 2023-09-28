@@ -76,8 +76,8 @@ public class Works {
     @Column(name = "type_of_release")
     private String typeOfRelease; // TODO EP, LP, Single, Film etc. В enum
 
-    @Column(name = "format_relese")
-    private String formatRelese; // TODO Формат релиза - mp3, CD, DVD etc. В enum
+    @Column(name = "format_release")
+    private String formatRelease; // TODO Формат релиза - mp3, CD, DVD etc. В enum
 
     @Column(name = "style_genre")
     private String styleGenre; // TODO Стиль или жанр
@@ -181,16 +181,16 @@ public class Works {
         this.typeOfRelease = typeOfRelease;
     }
 
-    public String getFormatRelese() {
-        return formatRelese;
+    public String getFormatRelease() {
+        return formatRelease;
     }
 
     public String getWorkId() {
         return workId;
     }
 
-    public void setFormatRelese(String formatRelese) {
-        this.formatRelese = formatRelese;
+    public void setFormatRelese(String formatRelease) {
+        this.formatRelease = formatRelease;
     }
 
     public String getStyleGenre() {

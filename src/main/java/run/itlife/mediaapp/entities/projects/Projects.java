@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import run.itlife.mediaapp.entities.persons.Persons;
 import run.itlife.mediaapp.entities.works.Works;
 
@@ -16,6 +18,8 @@ import java.util.List;
 @Entity
 @Table(name = "projects")
 public class Projects {
+
+    public static final String FIND_PROJECTS = "Projects.findProjectByPersonId";
 
     @Id
     @GeneratedValue(generator = "system-uuid")
