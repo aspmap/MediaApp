@@ -14,7 +14,7 @@ public interface MediaInfoRepository extends CrudRepository<MediaInfo, String> {
      * @param workId ID работы
      * @return Коллекция медиа
      */
-    @Query(value = "select w from MediaInfo w where w.work.workId = :workId")
+    @Query(value = "select mi from MediaInfo mi where mi.work.workId = :workId")
     Iterable<MediaInfo> findMediaByWorkId(@Param("workId") String workId);
 
 }
