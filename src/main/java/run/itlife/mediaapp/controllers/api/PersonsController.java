@@ -36,32 +36,35 @@ public class PersonsController {
 
     /**
      * Поиск всей информации по всем персонам
+     *
      * @return
      */
     @GetMapping("/persons")
     //@CrossOrigin(origins = "*")
-    public ResponseEntity<Iterable<Persons>> getPersons(){
+    public ResponseEntity<Iterable<Persons>> getPersons() {
         return ResponseEntity.ok(personsRepository.findAll());
     }
 
     /**
      * Поиск информации по id персоны
+     *
      * @param personId ID персоны
      * @return
      */
     @GetMapping("/person/{personId}")
-    public ResponseEntity<Persons> getPersonById(@PathVariable String personId){
+    public ResponseEntity<Persons> getPersonById(@PathVariable String personId) {
         Optional<Persons> person = personsRepository.findById(personId);
-        if(person.isPresent()) {
+        if (person.isPresent()) {
             return ResponseEntity.ok(person.get());
         }
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(personId) + ", Object with ID=" + personId + " not found");
+        return ResponseEntity.badRequest().body(person.get());
     }
 
     @PatchMapping("/person/{id}")
-    public ResponseEntity<Persons> setCompleted(@PathVariable String id){
+    public ResponseEntity<Persons> setCompleted(@PathVariable String id) {
         Optional<Persons> person = personsRepository.findById(id);
-        if(!person.isPresent()) {
+        if (!person.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         Persons result = person.get();
@@ -69,14 +72,14 @@ public class PersonsController {
         personsRepository.save(result);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .buildAndExpand(result.getPersonId()).toUri();
-        return ResponseEntity.ok().header("Location",location.toString()).build();
+        return ResponseEntity.ok().header("Location", location.toString()).build();
     }
 
-    @RequestMapping(value="/person", method = {RequestMethod.POST,RequestMethod.PUT})
-    public ResponseEntity<?> createPerson(@Valid @RequestBody Persons persons, Errors errors){
+    @RequestMapping(value = "/person", method = {RequestMethod.POST, RequestMethod.PUT})
+    public ResponseEntity<?> createPerson(@Valid @RequestBody Persons persons, Errors errors) {
         if (errors.hasErrors()) {
-           log.error("Bad request. Body of request must be not empty: " + ResponseEntity.badRequest().body(PersonsValidationErrorBuilder.fromBindingErrors(errors)).toString());
-           return ResponseEntity.badRequest().body(PersonsValidationErrorBuilder.fromBindingErrors(errors));
+            log.error("Bad request. Body of request must be not empty: " + ResponseEntity.badRequest().body(PersonsValidationErrorBuilder.fromBindingErrors(errors)).toString());
+            return ResponseEntity.badRequest().body(PersonsValidationErrorBuilder.fromBindingErrors(errors));
         }
         Persons result = personsRepository.save(persons);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -85,13 +88,13 @@ public class PersonsController {
     }
 
     @DeleteMapping("/person/{id}")
-    public ResponseEntity<Persons> deletePerson(@PathVariable String id){
+    public ResponseEntity<Persons> deletePerson(@PathVariable String id) {
         personsRepository.delete(PersonBuilder.create().withId(id).build());
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/person")
-    public ResponseEntity<Persons> deletePerson(@RequestBody Persons persons){
+    public ResponseEntity<Persons> deletePerson(@RequestBody Persons persons) {
         personsRepository.delete(persons);
         return ResponseEntity.noContent().build();
     }

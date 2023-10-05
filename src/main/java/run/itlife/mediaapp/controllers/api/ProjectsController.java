@@ -50,7 +50,8 @@ public class ProjectsController {
         if(project.isPresent()) {
             return ResponseEntity.ok(project.get());
         }
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(projectId) + ", Objects with projectId=" + projectId + " not found");
+        return ResponseEntity.badRequest().body(project.get());
     }
 
     /**
@@ -64,8 +65,8 @@ public class ProjectsController {
         if(((ArrayList) project).size() != 0) {
             return ResponseEntity.ok(project);
         }
-        log.error("Данные не найдены");
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(personId) + ", Objects with personId=" + personId + " not found");
+        return ResponseEntity.badRequest().body(project);
     }
 
 }

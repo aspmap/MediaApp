@@ -39,7 +39,7 @@ public class MediaInfoController {
     }
 
     /**
-     * Поиск медиа-информации по id медиа
+     * Поиск медиа-информации по ID медиа
      * @param mediaId ID медиа
      * @return
      */
@@ -49,7 +49,8 @@ public class MediaInfoController {
         if(mediaInfo.isPresent()) {
             return ResponseEntity.ok(mediaInfo.get());
         }
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(mediaId) + ", Object with ID=" + mediaId + " not found");
+        return ResponseEntity.badRequest().body(mediaInfo.get());
     }
 
     /**
@@ -63,7 +64,7 @@ public class MediaInfoController {
         if(((ArrayList) media).size() != 0) {
             return ResponseEntity.ok(media);
         }
-        log.error("Данные не найдены");
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(workId) + ", Objects with workId=" + workId + " not found");
+        return ResponseEntity.badRequest().body(media);
     }
 }

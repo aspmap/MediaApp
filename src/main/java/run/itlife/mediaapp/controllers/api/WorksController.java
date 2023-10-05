@@ -50,7 +50,8 @@ public class WorksController {
         if(work.isPresent()) {
             return ResponseEntity.ok(work.get());
         }
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(workId) + ", Object with ID=" + workId + " not found");
+        return ResponseEntity.badRequest().body(work.get());
     }
 
     /**
@@ -64,7 +65,7 @@ public class WorksController {
         if(((ArrayList) works).size() != 0) {
             return ResponseEntity.ok(works);
         }
-        log.error("Данные не найдены");
-        return ResponseEntity.notFound().build();
+        log.error("Error: " + ResponseEntity.badRequest().body(projectId) + ", Objects with projectId=" + projectId + " not found");
+        return ResponseEntity.badRequest().body(works);
     }
 }
