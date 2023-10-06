@@ -3,6 +3,8 @@ package run.itlife.mediaapp.validation;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 public class PersonsValidationErrorBuilder {
 
     public static PersonsValidationError fromBindingErrors(Errors errors) {

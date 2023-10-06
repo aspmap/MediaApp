@@ -3,6 +3,7 @@ package run.itlife.mediaapp.controllers.api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import run.itlife.mediaapp.repositories.WorksRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static run.itlife.mediaapp.messages.ErrorMessages.*;
 
 @RestController
 @RequestMapping("/api")
@@ -49,8 +52,8 @@ public class MediaInfoController {
         if(mediaInfo.isPresent()) {
             return ResponseEntity.ok(mediaInfo.get());
         }
-        log.error("Error: " + ResponseEntity.badRequest().body(mediaId) + ", Object with ID=" + mediaId + " not found");
-        return ResponseEntity.badRequest().body(mediaInfo.get());
+        log.error(ERROR + ResponseEntity.badRequest().body(mediaId) + ", " + OBJECT_NOT_FOUND + mediaId + NOT_FOUND);
+        return new ResponseEntity(OBJECT_NOT_FOUND + mediaId + NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -64,7 +67,7 @@ public class MediaInfoController {
         if(((ArrayList) media).size() != 0) {
             return ResponseEntity.ok(media);
         }
-        log.error("Error: " + ResponseEntity.badRequest().body(workId) + ", Objects with workId=" + workId + " not found");
-        return ResponseEntity.badRequest().body(media);
+        log.error(ERROR + ResponseEntity.badRequest().body(workId) + ", " + OBJECTS_NOT_FOUND_WORK_ID + workId + NOT_FOUND);
+        return new ResponseEntity(OBJECTS_NOT_FOUND_WORK_ID + workId + NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 }

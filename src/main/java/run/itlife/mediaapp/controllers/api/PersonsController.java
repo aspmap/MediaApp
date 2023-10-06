@@ -1,7 +1,5 @@
 package run.itlife.mediaapp.controllers.api;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import run.itlife.mediaapp.controllers.api.test.PersonBuilder;
 import run.itlife.mediaapp.entities.persons.Persons;
-import run.itlife.mediaapp.entities.projects.Projects;
 import run.itlife.mediaapp.repositories.PersonsRepository;
 import run.itlife.mediaapp.validation.PersonsValidationError;
 import run.itlife.mediaapp.validation.PersonsValidationErrorBuilder;
 
 import java.net.URI;
 import java.util.Optional;
+
+
+import static org.springframework.http.HttpStatus.*;
+import static run.itlife.mediaapp.messages.ErrorMessages.*;
+import static run.itlife.mediaapp.messages.ErrorMessages.NOT_FOUND;
 
 @RestController
 @RequestMapping("/api")
@@ -57,8 +59,8 @@ public class PersonsController {
         if (person.isPresent()) {
             return ResponseEntity.ok(person.get());
         }
-        log.error("Error: " + ResponseEntity.badRequest().body(personId) + ", Object with ID=" + personId + " not found");
-        return ResponseEntity.badRequest().body(person.get());
+        log.error(ERROR + ResponseEntity.badRequest().body(personId) + ", Object with ID=" + personId + NOT_FOUND);
+        return new ResponseEntity(OBJECT_NOT_FOUND + personId + NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
     @PatchMapping("/person/{id}")
@@ -100,7 +102,7 @@ public class PersonsController {
     }
 
     @ExceptionHandler
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = BAD_REQUEST)
     public PersonsValidationError handleException(Exception exception) {
         return new PersonsValidationError(exception.getMessage());
     }

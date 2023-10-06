@@ -3,6 +3,7 @@ package run.itlife.mediaapp.controllers.api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,8 @@ import run.itlife.mediaapp.repositories.ProjectsRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static run.itlife.mediaapp.messages.ErrorMessages.*;
 
 @RestController
 @RequestMapping("/api")
@@ -50,8 +53,8 @@ public class ProjectsController {
         if(project.isPresent()) {
             return ResponseEntity.ok(project.get());
         }
-        log.error("Error: " + ResponseEntity.badRequest().body(projectId) + ", Objects with projectId=" + projectId + " not found");
-        return ResponseEntity.badRequest().body(project.get());
+        log.error(ERROR + ResponseEntity.badRequest().body(projectId) + ", " + OBJECT_NOT_FOUND + projectId + NOT_FOUND);
+        return new ResponseEntity(OBJECT_NOT_FOUND + projectId + NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -65,8 +68,8 @@ public class ProjectsController {
         if(((ArrayList) project).size() != 0) {
             return ResponseEntity.ok(project);
         }
-        log.error("Error: " + ResponseEntity.badRequest().body(personId) + ", Objects with personId=" + personId + " not found");
-        return ResponseEntity.badRequest().body(project);
+        log.error(ERROR + ResponseEntity.badRequest().body(personId) + ", " + OBJECTS_NOT_FOUND_PERSON_ID + personId + NOT_FOUND);
+        return new ResponseEntity(OBJECTS_NOT_FOUND_PERSON_ID + personId + NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
 }
