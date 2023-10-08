@@ -19,4 +19,5 @@ public interface ProjectsRepository extends CrudRepository<Projects, String> {
     @Query(value = "select prj from Projects prj where prj.person.personId = :personId")
     Iterable<Projects> findProjectByPersonId(@Param("personId") String personId);
 
+
 }

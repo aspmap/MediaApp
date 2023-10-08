@@ -7,6 +7,8 @@ import run.itlife.mediaapp.entities.persons.Persons;
 import run.itlife.mediaapp.entities.projects.Projects;
 import run.itlife.mediaapp.entities.works.Works;
 
+import java.util.Optional;
+
 public interface WorksRepository extends CrudRepository<Works, String> {
 
     /**
@@ -16,5 +18,14 @@ public interface WorksRepository extends CrudRepository<Works, String> {
      */
     @Query(value = "select w from Works w where w.project.projectId = :projectId")
     Iterable<Works> findWorksByProjectId(@Param("projectId") String projectId);
+
+
+    /**
+     * JPQL-запрос на выборку проектов по ID медиа
+     * @param mediaId ID медиа
+     * @return Коллекция проектов
+     */
+    @Query(value = "select w from Works w, MediaInfo mi where mi.work.workId = w.workId and mi.mediaId = :mediaId")
+    Optional<Works> findWorkByMediaId(@Param("mediaId") String mediaId);
 
 }

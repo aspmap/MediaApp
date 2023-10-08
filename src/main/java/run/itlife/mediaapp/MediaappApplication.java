@@ -28,6 +28,7 @@ public class MediaappApplication {
 				registry.addMapping("/api/mediainfo/work/*").allowedOrigins("*");
 				registry.addMapping("/api/work/*").allowedOrigins("*");
 				registry.addMapping("/api/mediainfo/*").allowedOrigins("*");
+				registry.addMapping("/api/work/media/*").allowedOrigins("*");
 
 			}
 		};

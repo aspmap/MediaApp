@@ -71,4 +71,20 @@ public class WorksController {
         log.error(ERROR + ResponseEntity.badRequest().body(projectId) + ", " + OBJECTS_NOT_FOUND_PROJECT_ID + projectId + NOT_FOUND);
         return new ResponseEntity(OBJECTS_NOT_FOUND_PROJECT_ID + projectId + NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
+
+
+    /**
+     * Поиск работы по ID медиа
+     * @param mediaId ID медиа
+     * @return
+     */
+    @GetMapping("/work/media/{mediaId}")
+    public ResponseEntity<Works> getWorkByMediaId(@PathVariable String mediaId){
+        Optional<Works> work = worksRepository.findWorkByMediaId(mediaId);
+        if(work.isPresent()) {
+            return ResponseEntity.ok(work.get());
+        }
+        log.error(ERROR + ResponseEntity.badRequest().body(mediaId) + ", " + OBJECT_NOT_FOUND + mediaId + NOT_FOUND);
+        return new ResponseEntity(OBJECT_NOT_FOUND + mediaId + NOT_FOUND, HttpStatus.BAD_REQUEST);
+    }
 }
